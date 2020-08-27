@@ -111,7 +111,7 @@
                                 <div class="message-center">
                                     <!-- Message -->
                                     <a href="#">
-                                        <div class="user-img"> <img src="./assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                        <div class="user-img"> <img [src]="this.usuario.imagenUrl" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
                                         <div class="mail-contnet">
                                             <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
                                     </a>
@@ -156,28 +156,28 @@
                 <!-- Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="./assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img [src]="url" alt="user" class="profile-pic" /></a>
                     <div class="dropdown-menu dropdown-menu-right animated fadeIn fast">
                         <ul class="dropdown-user">
                             <li>
                                 <div class="dw-user-box">
-                                    <div class="u-img"><img src="./assets/images/users/1.jpg" alt="user"></div>
+                                    <div class="u-img"><img [src]="url" alt="user"></div>
                                     <div class="u-text">
-                                        <h4>Steave Jobs</h4>
-                                        <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                        <h4>{{usuario.nombre}}</h4>
+                                        <p class="text-sm">{{correo | slice:0:20  }} {{(correo.length>20)? '...':''}}  </p><a  [routerLink]="['./perfil']" routerLinkActive="router-link-active"   class="btn btn-rounded btn-danger btn-sm">Perfil</a></div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                            <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                            <li><a [routerLink]="['./perfil']" routerLinkActive="router-link-active" ><i class="ti-user"></i> Perfil</a></li>
+                            <li><a href="#"><i class="ti-wallet"></i>  Balance</a></li>
+                            <li><a href="#"><i class="ti-email"></i> Mensajes</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a routerLink="account-settings"><i class="ti-settings"></i> Account Setting</a></li>
+                            <li><a routerLink="account-settings"><i class="ti-settings"></i> Configuración</a></li>
                             <li role="separator" class="divider"></li>
                             <li>
                                 <a (click)="Logout()" routerLink="/login">
                                     <i class="fa fa-power-off"></i> 
-                                    Logout
+                                    Salir
                                 </a>
                             </li>
                         </ul>

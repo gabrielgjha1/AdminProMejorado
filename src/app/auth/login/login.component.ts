@@ -12,7 +12,11 @@ declare const  gapi:any;
 export class LoginComponent implements OnInit {
 
   constructor( private router: Router,private _UsuarioServices:UsuariosService,
-              private ngZone:NgZone) { }
+              private ngZone:NgZone) { 
+
+                console.log(this._UsuarioServices.usuario)
+
+              }
 
   form:FormGroup;
   auth2:any
@@ -21,7 +25,7 @@ export class LoginComponent implements OnInit {
 
     return new FormGroup({
 
-      email:new FormControl('prueba5@hotmail.com',[Validators.email,Validators.required]),
+      email:new FormControl('prueba@prueba.com',[Validators.email,Validators.required]),
       password:new FormControl('123',Validators.required)
 
     });
@@ -29,8 +33,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.renderButton();
     this.form = this.Formulario();
+  
   }
   
  
@@ -65,7 +71,7 @@ export class LoginComponent implements OnInit {
     this.auth2.attachClickHandler(element, {},
         (googleUser)=> {
            var id_token = googleUser.getAuthResponse().id_token;
-           console.log(id_token)
+         
            this._UsuarioServices.LoginGOogle(id_token).subscribe(resp=>{
            
             this.ngZone.run(()=>{
@@ -84,14 +90,12 @@ export class LoginComponent implements OnInit {
     if (this.form.valid){
 
       let usuario = new Usuario(undefined,this.form.value.email,this.form.value.password);
-      console.log(usuario)
+
       this._UsuarioServices.Login(usuario).subscribe((resp)=>{
         this.router.navigateByUrl('/');
-        console.log(resp);
+      
 
       })
-
-      console.log(this.form.value)
 
     }
 

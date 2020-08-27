@@ -10,25 +10,54 @@ declare const  gapi:any;
   providedIn: 'root'
 })
 export class UsuariosService {
+  public usuario:Usuario;
   public auth2:any
+
+
   constructor(public http:HttpClient,private route:Router,private ngZone:NgZone) { 
     this.googleInit
   }
 
 
+  get Token():string{
+
+    return localStorage.getItem('token') || '';
+
+  }
+
   validarTOken():Observable <boolean>{
     
     const url  = environment.url+'/login/renew';
-    const token = localStorage.getItem('token') || '' ;
+    const token = this.Token ;
 
     return  this.http.get(url,{headers:{'token':token}}).pipe(
 
+      tap((resp:any)=>{
+      
+      console.log(resp)
+      const {nombre,email,role,google,_id,img} = resp.usuario;
+      
+      this.usuario=new Usuario(nombre,email,'',img,role,google,_id);
+      
+        
+      }),
+
       map( resp=> true ),
-      catchError(error => of(false) )
+
+      catchError(error =>{
+        this.route.navigateByUrl('/login')
+        return of(false)
+      }  )
 
     );
 
   }
+
+
+
+
+
+
 
   googleInit(){
     gapi.load('auth2', ()=>{
@@ -78,6 +107,16 @@ export class UsuariosService {
 
   }
 
+  ActualizarUsuario(data:{email:string,nombre:string},id){
+
+    const url = `${environment.url}/usuario/${id}`
+
+    return this.http.put(url,data,{headers:{token:this.Token}})
+
+  }
+
+
+    ///login
   Login(usuario:Usuario){
 
     const url  = environment.url+'/login';
@@ -97,11 +136,11 @@ export class UsuariosService {
   LoginGOogle(token:string){
 
     const url  = environment.url+'/login/google';
-
+    
     return this.http.post(url,{token}).pipe(
 
       tap((resp:any)=>{
-        console.log(resp)
+
         localStorage.setItem('token',resp.token)
 
       })

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 // Modulos
 import { SharedModule } from '../shared/shared.module';
@@ -15,6 +15,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 
@@ -28,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent,
+    PerfilComponent,
   ],
   exports: [
     DashboardComponent,
@@ -42,7 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     RouterModule,
     ComponentsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }
