@@ -1,0 +1,71 @@
+<div class="row animate fadeIn fast">
+
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Usuarios</h5>
+                
+                <input (keyup)="Buscar(input.value)" #input type="text" class="form-control" placeholder="Buscar Usuario" >
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<app-cargando [cargando]="cargando" ></app-cargando>
+
+<div class="row" class="animate fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table  table-responsive-md table-active">
+                    <thead style="background: #8E24AA ;" class="table-active">
+                      <tr class="text-white">
+                        <th  class="text-center" scope="col">Avatar</th>
+                        <th class="text-center"  scope="col">Correo</th>
+                        <th class="text-center" scope="col">Nombre</th>
+                        <th class="text-center" scope="col">Role</th>
+                        <th class="text-center" scope="col">Auth</th>
+                        <th class="text-center" scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of usuario" >
+                      
+                        <td class="text-center" >
+                            <img src="{{item.imagenUrl}}" class="imagenes" alt="">
+                        </td>
+                        <td class="text-center">{{item.email}}</td>
+                        <td class="text-center">{{item.nombre}}</td>
+                        <td class="text-center">
+                            <select #select  class="form-control"
+                                    [disabled]="!desactivarRol"
+                                    [(ngModel)]="item.role"
+                                     (change)="CambiarRol(select.value,item._id)">
+                                <option value="ADMIN_ROLE">ADMIN_ROLE</option>
+                                <option value="USER_ROLE">USER_ROLE</option>
+                            </select>
+                            </td>
+                        <td class="text-center"><span *ngIf="item.google" class="badge badge-pill badge-primary" >Google</span>  <span *ngIf="!item.google"  class="badge badge-pill badge-info "  >Email</span>  </td>
+                        <td class="text-center"><a class="cursor" (click)="ActivarRole()"   data-toggle="tooltip" data-original-title="Edit"> <i   class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                            <a      (click)="EliminarUsuario(item._id)"  data-toggle="tooltip" data-original-title="Close"  class="cursor" > <i class="fa fa-close text-danger"></i> </a></td>
+                      </tr>
+                      
+                    </tbody>
+                      
+     
+                       
+             
+                  </table>
+                  
+            </div>
+            <div>
+                <button (click)="PasarPagina(-5)"  type="button"  class="btn btn-primary mr-3 "   >Anterior</button> <button (click)="PasarPagina(5)" type="button"  class="btn btn-primary "   >Siguiente</button>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,3 +9,16 @@
 #themecolors .selector {
     cursor: pointer;
 }
+
+.imagenes{
+
+    max-width: 45px; 
+    max-height: 45px;
+    min-width: 45px; 
+    min-height: 45px;
+
+}
+
+.cursor{
+    cursor: pointer
+}

@@ -114,6 +114,13 @@ export class UsuariosService {
     return this.http.put(url,data,{headers:{token:this.Token}})
 
   }
+  ActualizarRole(data:{role:string},id){
+
+    const url = `${environment.url}/usuario/${id}`
+
+    return this.http.put(url,data,{headers:{token:this.Token}})
+
+  }
 
 
     ///login
@@ -149,4 +156,56 @@ export class UsuariosService {
 
   }
 
+  TraerUsuarios(desde?:number){
+    const url  = environment.url+'/usuario?desde='+desde;
+    
+    return this.http.get(url,{headers:{
+      'token':localStorage.getItem('token')
+    }}).pipe(
+
+      map(  (resp:any) =>{
+        const usuarios = resp.usuarios.map(
+          resp=>new Usuario(resp.nombre,resp.email,'',resp.img,resp.role,resp.google,resp._id)
+         
+        )
+        const Total = resp.Total
+     
+        return {
+          usuarios,
+          Total
+        }
+
+      })
+     
+
+    )
+    /*
+    try {
+      
+      const respuesta= await fetch(url,{
+        method:'GET',
+        headers:{
+          'token':localStorage.getItem('token')
+        },
+
+      });
+
+      const data = await respuesta.json();
+      
+     return data;
+      
+    } catch (error) {
+      console.log(error)
+    }
+    */
+
+  }
+
+  BorrarUsuarios(id:string){
+    const url  = environment.url+'/usuario/'+id;
+
+    return this.http.delete(url,{headers:{'token':this.Token}});
+  
+  }
 }
+

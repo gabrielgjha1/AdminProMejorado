@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario.model';
 import {FileUploadsService} from  '../../services/file-uploads.service' ;
 import { HeaderComponent } from 'src/app/shared/header/header.component';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -36,7 +37,20 @@ export class PerfilComponent implements OnInit {
 
   SubirImagen(){
     this._FileUpload.actualizarFoto(this.imagenSubir,'usuarios',this.usuario._id)
-      .then(img=>console.log(img))
+      .then(img=>console.log(img)).catch(err=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Debe llenar todos los campos!',
+        })
+        
+      })
+
+    return  Swal.fire(
+        'Buen trabajo!',
+        ' Imagen actualizada!',
+        'success'
+      )
   }
 
   Formulario(){
@@ -54,7 +68,15 @@ export class PerfilComponent implements OnInit {
   ActualizarDatos(){
       
     if (this.form.invalid){
+
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Debe llenar todos los campos!',
+      })
       
+
       return;
       
     }
@@ -62,9 +84,15 @@ export class PerfilComponent implements OnInit {
     const data = {nombre:this.form.value.nombre,email:this.form.value.email}
     
     this._UsuarioServices.ActualizarUsuario(data,this._UsuarioServices.usuario._id).subscribe((resp:any)=>{
-    
-      this.usuario.nombre=this.form.value.nombre;
+      
+      Swal.fire(
+        'Buen trabajo!',
+        'Información actualizada!',
+        'success'
+      )
 
+      this.usuario.nombre=this.form.value.nombre;
+      
 
     })
 

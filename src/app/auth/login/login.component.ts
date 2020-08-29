@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Usuario } from 'src/app/models/usuario.model';
+import Swal from 'sweetalert2';
 declare const  gapi:any;
 @Component({
   selector: 'app-login',
@@ -95,7 +96,22 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/');
       
 
+        return  Swal.fire(
+          'Buen trabajo!',
+          'Login!',
+          'success'
+        )
+
+
       })
+
+      Swal.fire({
+
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Error verifique los datos ingresados!'
+
+      });
 
     }
 
