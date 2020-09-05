@@ -1,0 +1,128 @@
+<div class="row animate fadeIn fast">
+
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Usuarios</h5>
+                
+                <input  #input type="text" #buscar  (keyup)="Buscar(buscar.value)"  class="form-control" placeholder="Buscar Usuario" >
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<app-cargando [cargando]="cargando" ></app-cargando> 
+
+<div class="row      justify-content-end" *ngIf="!cargando" > 
+    <div class="col-4 ">
+        <button type="button"  data-toggle="modal" data-target="#AgragarHospital" class="btn btn-primary " > Agregar Hospital </button>
+    </div>
+</div>
+<div class="row"   *ngIf="!cargando" class="animate fadeIn fast" >
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table  table-responsive-md table-active">
+                    <thead style="background: #8E24AA ;" class="table-active">
+                      <tr class="text-white">
+                        <th  class="text-center" scope="col">Foto</th>
+                        <th class="text-center" scope="col">Nombre</th>
+                        <th class="text-center"  scope="col">Usuario</th>
+                        <th class="text-center"  scope="col">Correo</th>
+                        <th class="text-center" scope="col">Foto del usuario</th>
+                       
+                        
+                        <th class="text-center" scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of hospital" >
+                      
+                        <td class="text-center" >
+                            <img src="{{item.imagenUrl}}" class="imagenes" alt="">
+                        </td>
+                    
+                        <td class="text-center"> <input type="text" [disabled]="editar" class="form-control" [(ngModel)]="item.nombre" > </td>
+                        <td class="text-center">{{item.usuario.nombre}}</td>
+                        <td class="text-center">{{item.usuario.email}}</td>
+                    
+                        <td class="text-center">  <img src="{{item.imagenUrl2}}" class="imagenes" alt="">    </td>
+                        <td class="text-center"><a class="cursor" (click)="EditarHospital(item.nombre,item.id)"    data-toggle="tooltip" data-original-title="Edit"> <i   class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                            <a  (click)="eliminar(item.id)"    data-toggle="tooltip" data-original-title="Close"  class="cursor" > <i class="fa fa-close text-danger"></i> </a></td>
+                      </tr>
+                      
+                    </tbody>
+ 
+                  </table>
+                  
+            </div>
+            <div>
+                <button   type="button"  class="btn btn-primary mr-3 " (click)="PasarPagina(-5)"  >Anterior</button> <button  (click)="PasarPagina(5)" type="button"  class="btn btn-primary "   >Siguiente</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="AgragarHospital" tabindex="-1" role="dialog" aria-labelledby="AgragarHospital" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar hospital</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+
+                        <label for="nombre">Nombre</label>
+                        <input type="text" #nombre placeholder="Nombre del hospital" class="form-control" >
+
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+
+                        <label for="nombre">Agregar imagen</label>
+                        <input type="file"  (change)="GuardarImagen($event.target.files[0])"  placeholder="Nombre del hospital" class="form-control" >
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" (click)="guardarHospital(nombre.value)" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

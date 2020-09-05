@@ -9,14 +9,16 @@ export class FileUploadsService {
 
   async actualizarFoto(
     archivo:File,
-    tipo:'usuarios'|'medicos'|'usuarios',
+    tipo:'usuarios'|'medicos'|'hospitales',
     id:string
     ){
-      
+    
       try {
+        console.log(id)
+        let ids=id;
 
-        let url = `${environment.url}/subir/${tipo}/${id}`;
-        
+        let url = `${environment.url}/subir/${tipo}/${ids}`;
+   
         const formData = new FormData();
         formData.append('imagen',archivo);  
         const resp = await fetch(url,{
@@ -28,7 +30,7 @@ export class FileUploadsService {
         });
 
         const data= await resp.json();
-        
+   
         if (data.status){
          
           return data.nombreArchivo;

@@ -1,0 +1,73 @@
+
+
+<div class="row animate fadeIn fast">
+
+    <div class="col-12">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Médicos</h5>
+                
+                <input  #input type="text" class="form-control" placeholder="Buscar Medicos" >
+
+            </div>
+        </div>
+
+    </div>
+
+</div> -->
+
+<app-cargando  [cargando]="cargando" ></app-cargando>
+
+
+<div class="row      justify-content-end"  > 
+    <div class="col-4 ">
+        <button type="button"  data-toggle="modal" data-target="#AgragarHospital" (click)="Navegar()" class="btn btn-primary " > Agregar Médicos </button>
+    </div>
+</div>
+
+
+<div class="row" *ngIf="!cargando" class="animate fadeIn fast" >
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table  table-responsive-md table-active">
+                    <thead style="background: #8E24AA ;" class="table-active">
+                      <tr class="text-white">
+                        <th  class="text-center" scope="col">Avatar</th>
+                        <th class="text-center"  scope="col">Nombre</th>
+                        <th class="text-center"  scope="col">Hospital Asignado</th>
+                        <th class="text-center"  scope="col">Creado por</th>
+                        <th class="text-center" scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of Medicos"  >
+                      
+                        <td class="text-center" >
+                            <img src="{{item.imagenUrl}}" class="imagenes" alt="">
+                        </td>
+                        <td class="text-center">{{item.nombre}}</td>
+                        <td class="text-center">{{item.hospitales.nombre}}</td>
+                        <td class="text-center">{{item.usuarios.nombre}}</td>
+                       
+                       
+                        <td class="text-center"><a class="cursor"   data-toggle="tooltip" data-original-title="Edit"> <i   class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                            <a     (click)="EliminarMedicos(item.id)"  data-toggle="tooltip" data-original-title="Close"  class="cursor" > <i class="fa fa-close text-danger"></i> </a></td>
+                      </tr>
+                      
+                    </tbody>
+                      
+     
+                       
+             
+                  </table>
+                  
+            </div>
+            <div>
+                <button   (click)="PasarPagina(-5)"  type="button"  class="btn btn-primary mr-3 "   >Anterior</button> <button (click)="PasarPagina(5)"  type="button"  class="btn btn-primary "   >Siguiente</button>
+
+            </div>
+        </div>
+    </div>
+</div>
