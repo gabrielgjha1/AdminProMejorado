@@ -8,11 +8,10 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="url" alt="user" /><span class="hide-menu">Steave Jobs </span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="url" alt="user" /><span class="hide-menu">{{_UsuarioServices.usuario.nombre }} </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a [routerLink]="['./perfil']">Perfil </a></li>
                         <li><a href="javascript:void()">Balance</a></li>
-                        <li><a href="javascript:void()">Mensajes</a></li>
                         <li><a routerLink="account-settings">Configuración</a></li>
                         <li><a routerLink="/login">Salir</a></li>
                     </ul>

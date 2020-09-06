@@ -3,8 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Usuario } from '../models/usuario.model';
 import {environment} from '../../environments/environment';
 import {tap, map, catchError} from 'rxjs/operators'
-import { Observable,of } from 'rxjs';
+import { Observable,of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import Swal from 'sweetalert2';
 declare const  gapi:any;
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,22 @@ export class UsuariosService {
     this.googleInit
   }
 
+  get role():'ADMN_ROLE' | 'USUER_ROLE' {
+    return this.usuario.role;
+  }
 
   get Token():string{
 
     return localStorage.getItem('token') || '';
 
+  }
+
+
+  //guardarMenu
+
+  GuardarMenu(resp:any){
+    localStorage.setItem('token',resp.token)
+    localStorage.setItem('menu',resp.menu);
   }
 
   validarTOken():Observable <boolean>{
@@ -38,7 +51,8 @@ export class UsuariosService {
       const {nombre,email,role,google,_id,img} = resp.usuario;
       
       this.usuario=new Usuario(nombre,email,'',img,role,google,_id);
-      
+        
+        localStorage.setItem('menu', JSON.stringify(resp.menu) );
         
       }),
 
@@ -100,11 +114,20 @@ export class UsuariosService {
       tap((resp:any)=>{
 
         localStorage.setItem('token',resp.token)
+        
+      }),
+  
+      catchError(error =>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.error.mensaje,
+          footer: '<a href>Why do I have this issue?</a>'
+        })
+        return throwError(error);
+      }  )
 
-      })
-
-    );
-
+    )
   }
 
   ActualizarUsuario(data:{email:string,nombre:string},id){
@@ -114,6 +137,7 @@ export class UsuariosService {
     return this.http.put(url,data,{headers:{token:this.Token}})
 
   }
+
   ActualizarRole(data:{role:string},id){
 
     const url = `${environment.url}/usuario/${id}`
@@ -132,9 +156,23 @@ export class UsuariosService {
 
       tap((resp:any)=>{
 
-        localStorage.setItem('token',resp.token)
+        this.GuardarMenu(resp);
 
-      })
+
+      }),
+
+      catchError(error =>{
+
+        Swal.fire({
+
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error verifique los datos ingresados!'
+  
+        });
+        
+        return throwError(error);
+      }  )
 
     );
 
@@ -147,9 +185,8 @@ export class UsuariosService {
     return this.http.post(url,{token}).pipe(
 
       tap((resp:any)=>{
-
-        localStorage.setItem('token',resp.token)
-
+        this.GuardarMenu(resp);
+    
       })
 
     );
@@ -178,6 +215,8 @@ export class UsuariosService {
         }
 
       })
+
+     
      
 
     )

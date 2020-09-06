@@ -20,6 +20,15 @@ export class BuscadorService {
 
   }
 
+  busquedaGlobar(busqueda:string){
+    const url = `${environment.url}/buscar/${busqueda}`
+
+   return this.http.get(url);
+
+
+
+  }
+
   transformarAmodeloHospital( resp:any[] ):hospital[] {
     console.log('aqui 2');
     return resp.map((resp)=>
