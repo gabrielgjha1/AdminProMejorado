@@ -84,7 +84,8 @@ export class HospitalesComponent implements OnInit {
       
       if (this.usuarioCreado==true && this.imagen){
         this._FileUploadsService.actualizarFoto(this.imagen,'hospitales',this.id).then(resp=>{
-   
+          this.ngOnInit();
+          this.TRaerHospitales();
         })
   
       }else{
