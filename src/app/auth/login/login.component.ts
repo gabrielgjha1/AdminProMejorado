@@ -105,7 +105,13 @@ export class LoginComponent implements OnInit {
 
       })
 
-     
+      Swal.fire({
+
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Error verifique los datos ingresados!'
+
+      });
 
     }
 

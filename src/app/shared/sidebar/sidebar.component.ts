@@ -12,7 +12,7 @@ export class SidebarComponent implements OnInit {
 
   menuItems: any[];
   public url:string;
-  constructor( private sidebarService: SidebarService, private _UsuarioServices:UsuariosService) {
+  constructor( public sidebarService: SidebarService, public _UsuarioServices:UsuariosService) {
     this.menuItems = sidebarService.menu;
     
     this.url= _UsuarioServices.usuario.imagenUrl;
