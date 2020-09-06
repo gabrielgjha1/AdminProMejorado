@@ -17,12 +17,13 @@ export class AdminGuard implements CanActivate {
 
 
 
-    if (this._UsuarioServices.role==='ADMN_ROLE'){
+    if (this._UsuarioServices.role==='ADMIN_ROLE'){
 
       
       return true;
 
     }else{
+    
       this.router.navigateByUrl('')
       return false;
 

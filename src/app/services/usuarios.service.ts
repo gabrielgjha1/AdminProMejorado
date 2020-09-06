@@ -20,7 +20,7 @@ export class UsuariosService {
     this.googleInit
   }
 
-  get role():'ADMN_ROLE' | 'USUER_ROLE' {
+  get role():'ADMIN_ROLE' | 'USUER_ROLE' {
     return this.usuario.role;
   }
 

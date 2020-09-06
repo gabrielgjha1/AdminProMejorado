@@ -22,6 +22,7 @@ export class medicos {
     }
 
     get imagenUrl(){
+        console.log(this.img)
         if (!this.img){
 
             this.img='';

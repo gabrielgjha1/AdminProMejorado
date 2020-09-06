@@ -33,6 +33,7 @@ export class HospitalesComponent implements OnInit {
       this.TotalHospitales=resp.length;
       this.hospital = resp;
       this.cargando=false;
+      console.log(this.hospital)
   
     })
   }
@@ -80,18 +81,19 @@ export class HospitalesComponent implements OnInit {
         'Hospital agregado!',
         'success'
       )
+      
+      if (this.usuarioCreado==true && this.imagen){
+        this._FileUploadsService.actualizarFoto(this.imagen,'hospitales',this.id).then(resp=>{
+   
+        })
+  
+      }else{
+        this.TRaerHospitales();
+      }
+      
 
     })
     
-    
-    if (this.usuarioCreado==true && this.imagen){
-      this._FileUploadsService.actualizarFoto(this.imagen,'hospitales',this.id).then(resp=>{
- 
-      })
-
-    }else{
-      this.TRaerHospitales();
-    }
     
     
 
